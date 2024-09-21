@@ -1,0 +1,36 @@
+---
+import { cn } from "@lib/utils"
+import Container from "./Container.astro"
+import {button} from "@tailus/themer-button"
+import { ACTION_ERROR_CODES } from "astro:actions"
+---
+
+
+
+<section class="relative overflow-hidden scroll-mt-24" id="home">  
+    <div
+        aria-hidden
+        class="opacity-0 dark:opacity-25 absolute [background-image:radial-gradient(theme(colors.gray.500),transparent_50%)] top-0 w-[1000px] z-10 h-[800px] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      />
+    <Container>
+        <div class="relative pt-32 sm:pt-44 ml-auto">
+            <div class="lg:w-2/3 text-center mx-auto">
+                <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-5xl md:text-6xl">Beachvolleyball für Zürich</h1>
+                <p class="max-w-xl mx-auto mt-8 text-gray-700 dark:text-gray-300">
+                  <b>W</b>ir alle lieben Beachvolleyball! Was wir nicht lieben, sind fehlende oder belegte Felder. Um das zu ändern, gibt es jetzt <b>Beachvolley Zürich</b>. Als Club engagieren wir uns für die Verbesserung der bestehenden Infrastruktur und für weitere nutzbare Anlagen. Ausserdem möchten wir für die Stadt eine Anlaufstelle sein und mit ihr zusammen den Sport fördern.
+                 </p>
+                 <p class="mt-6">
+                  Was benötigen wir dafür? Möglichst viele Mitglieder.</p>
+                  <p>Unterstütze uns und werde Mitglied – es ist kostenlos! 
+                 </p>
+                  <div class=" mt-12 flex flex-wrap justify-center" >
+                    <!-- button start -->
+                    <a href="" target="_blank" class={cn(button.primary.lg, "relative z-[1]")}>
+                      Join Beachvolley Zürich
+                    </a>
+                    <!-- button end -->
+                  </div>
+            </div>
+        </div>
+    </Container>
+</section>
