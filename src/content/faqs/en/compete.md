@@ -1,5 +1,5 @@
 ---
-question: Nimmt Beachvolley Züri an einer Meisterschaftsrunde / Turnieren teil? Bietet der Verein Trainings an?
+question: Do you compete in a league and/or offer trainings?
 ---
 
 Nein, aktuell nicht. 

@@ -2,7 +2,10 @@
 import Container from "./Container.astro";
 import { Accordion, AccordionItem } from 'free-astro-components'
 import { getCollection } from 'astro:content';
-const faqEntries = await getCollection('faqs');
+
+const complocale = Astro.url.pathname.localeCompare('/en') === 0? 'en' : 'de';
+const faqEntries = await getCollection('faqs',  ({ id }) => id.includes(`${complocale}/`));
+
 
 ---
 
@@ -22,8 +25,9 @@ const faqEntries = await getCollection('faqs');
         </div>
         <div class="p-[--card-padding] overflow-hidden xlg:aspect-video flex rounded-[--card-border-radius] bg-gray-100 dark:bg-[--card-dark-bg]">
             <div class="mt-12 gap-4 sm:gap-12 max-w-3xl w-full mx-auto">
+                
+                
                 <Accordion>
-
                   {faqEntries.map(faqEntry => (
                     <AccordionItem name="accordion" title={faqEntry.data.question}>
                     {faqEntry.body}
