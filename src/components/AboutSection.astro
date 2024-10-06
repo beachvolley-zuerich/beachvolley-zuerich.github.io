@@ -3,7 +3,7 @@ import Container from "./Container.astro";
 import { Accordion, AccordionItem } from 'free-astro-components'
 import { getCollection } from 'astro:content';
 
-const complocale = Astro.url.pathname.localeCompare('/en') === 0? 'en' : 'de';
+const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
 const faqEntries = await getCollection('faqs',  ({ id }) => id.includes(`${complocale}/`));
 
 

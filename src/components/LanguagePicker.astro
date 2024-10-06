@@ -1,0 +1,19 @@
+---
+import { languages } from '../i18n/ui';
+---
+
+<style>
+    .lang-link{
+        font-size: .8em;
+    }
+
+    .lang-link:hover{
+        text-decoration: underline;
+    }
+</style>
+
+<div class="ml-6 content-end">
+    {languages.map(language => (
+        <a class="px-2 lang-link" href={`/${language.code}/`}>{language.name}</a>
+        ))}
+</div>
