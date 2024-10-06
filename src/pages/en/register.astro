@@ -1,0 +1,45 @@
+
+
+<!--
+http://localhost/v1/databases/66d1c4d700033f5e6e3f/collections/66d1c4ef003689099c74/documents
+-->
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const form = event.target;
+        const formData = new FormData(form);
+        const jsonData = {};
+    
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+    
+        const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-Appwrite-Project': '66d1c4650023ec9ef5b0',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                documentId: 'momomom',
+                data: jsonData
+            })
+        });
+    
+        const result = await response.json();
+        console.log(result);
+    });
+    </script>
+    
+
+
+<h1>Register</h1>
+<form id="registerForm" method="POST" action="http://localhost/v1/databases/66d1c4d700033f5e6e3f/collections/66e73deb000383b81e5b/documents" enctype="application/x-www-form-urlencoded">  
+    <label>
+    Name:
+    <input type="text" name="name" />
+  </label>
+  <button type="submit">Register</button>
+</form>

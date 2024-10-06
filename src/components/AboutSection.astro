@@ -1,6 +1,9 @@
 ---
 import Container from "./Container.astro";
 import { Accordion, AccordionItem } from 'free-astro-components'
+import { getCollection } from 'astro:content';
+const faqEntries = await getCollection('faqs');
+
 ---
 
 <section>
@@ -20,59 +23,15 @@ import { Accordion, AccordionItem } from 'free-astro-components'
         <div class="p-[--card-padding] overflow-hidden xlg:aspect-video flex rounded-[--card-border-radius] bg-gray-100 dark:bg-[--card-dark-bg]">
             <div class="mt-12 gap-4 sm:gap-12 max-w-3xl w-full mx-auto">
                 <Accordion>
-                    <AccordionItem name="accordion" title="Was habe ich von einer Mitgliedschaft?">
-                      <p>
-                        Wir fungieren als Sprachrohr der Community gegenüber der Stadt und setzen uns für mehr und bessere Beachvolleyball-Felder in der Stadt Zürich ein.
-                      </p>
-                    </AccordionItem>
-                    <AccordionItem name="accordion" title="Kostenlos - wie geht das?">
-                        <p>
-                        Wir möchten jedem ermöglichen, beizutreten und keine finanzielle Barriere schaffen. 
-                        Ausserdem kostet das Einziehen von Mitgliederbeiträgen ebenfalls Zeit und Aufwand. 
-                        Aktuell finanzieren wir uns über ehrenamtliches Engagement, private Spenden und ggf. Sponsoren. 
-                        Für einzelne Projekte werden wir zu Crowdfunding-Aktionen aufrufen.
-                        Sollten wir für einzelne Projekte Geld benötigen, würden wir dies über Crowdfunding sammeln.
-                        </p>
-                    </AccordionItem>
-                    <AccordionItem name="accordion" title="Gibt es einen konkreten (Zeit)plan?">
-                      <p><i>“Planung ist die Ersetzung des Zufalls durch den Irrtum.”</i></p>
-Da die Umsetzung einzelner Projekte insbesondere in der Anfangsphase abhängig von vielen externen Faktoren sind, möchten wir keinen Zeitplan setzen. Wir haben jedoch Ideen, was wir in der Zukunft umsetzen möchten: 1. Eine <b>Übersicht der aktuell bestehenden Felder</b> mit Informationen erstellen
-2. <b>>aktuelle Felder verbessern</b> (Antennen anbringen, Rechen bereitstellen, Linien erneuern)
-3. Längerfristig môchten wir uns für ein möglichst <b>zentrales Beachzentrum in Zürich mit mehreren Feldern</b> engagieren.
-                    </AccordionItem>
-                    <AccordionItem name="accordion" title="Wieso ein Verein ?">
-                      <p>
-                        Ein Grossteil der Menschen, die Beachvolleyball spielen, spielen dies privat und nicht über einen Verein organisiert. Dadurch sind wir anonym und es gibt wenig Zahlen, wie viele es von uns definitiv gibt.
-                      </p>
-                    </AccordionItem>
-                <AccordionItem name="accordion" title="Wie kann ich bei Beachvolley Züri mitarbeiten?">
-                    <p>
-                        Melde Dich bei per Mail bei uns mit Deiner Idee für eine Rolle oder eine Tätigkeit. Wir leben von aktiven, engagierten Mitgliedern und freuen uns über Dein Engagement.  
-                    </p>
-                  </AccordionItem>
-                  <AccordionItem name="accordion" title="Nimmt Beachvolley Züri an einer Meisterschaftsrunde / Turnieren teil? Bietet der Verein Trainings an?">
-                        <p>Nein, aktuell nicht. 
-                            Wir treten nicht in (sportliche) Konkurrenz mit bestehenden Vereinen, 
-                            sondern verstehen uns komplementär. Wir möchten bestehende Vereine und Einzelpersonen damit unterstützen, dass wir uns für mehr und bessere Felder einsetzen.
-                        </p>
-              </AccordionItem>
-              <AccordionItem name="accordion" title="Wie lange bin ich Mitglied?">
-                <p>
-                    Falls ihr eure Mitgliedschaft beenden möchtet, könnt ihr dies bis zum übernächsten Monatsende tun. Vorerst müsst ihr dafür schriftlich per Mail kündigen, später dann direkt auf der Homepage.
-                </p>
-              </AccordionItem>
-              <AccordionItem name="accordion" title="Welche Pflichten habe ich als Mitglied?">
-                <p>
-                Keine! Jeder soll sich so viel einbringen wie er möchte, aber niemand zu etwas gezwungen werden. 
-                </p>
-              </AccordionItem>
-              <AccordionItem name="accordion" title="Wer steckt hinter Beachvolleyball Züri? ">
-              <p>
-                Aktuell bestehen wir aus wenigen Einzelpersonen (Constantin Quadt, Matthias "Bunny" Bannert, Jonathan “Joni” Beck) . Sobald sich die Vereinsstruktur weiterentwickelt und gefestigt hat, stellen wir diese hier dar.
-              </p>
-            </AccordionItem>
 
-        </AccordionItem>
+                  {faqEntries.map(faqEntry => (
+                    <AccordionItem name="accordion" title={faqEntry.data.question}>
+                    {faqEntry.body}
+                    </AccordionItem>
+                  ))}
+                    
+                    
+                </Accordion>
 
             </div>
         </div>
