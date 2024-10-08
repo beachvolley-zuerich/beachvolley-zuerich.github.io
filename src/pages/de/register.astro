@@ -1,45 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from "../../components/Container.astro"
+---
 
 
-<!--
-http://localhost/v1/databases/66d1c4d700033f5e6e3f/collections/66d1c4ef003689099c74/documents
--->
-
-<script>
-    document.getElementById('registerForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        
-        const form = event.target;
-        const formData = new FormData(form);
-        const jsonData = {};
-    
-        formData.forEach((value, key) => {
-            jsonData[key] = value;
-        });
-    
-        const response = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'X-Appwrite-Project': '66d1c4650023ec9ef5b0',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                documentId: 'momomom',
-                data: jsonData
-            })
-        });
-    
-        const result = await response.json();
-        console.log(result);
-    });
-    </script>
-    
 
 
-<h1>Register</h1>
-<form id="registerForm" method="POST" action="http://localhost/v1/databases/66d1c4d700033f5e6e3f/collections/66e73deb000383b81e5b/documents" enctype="application/x-www-form-urlencoded">  
-    <label>
-    Name:
-    <input type="text" name="name" />
-  </label>
-  <button type="submit">Register</button>
-</form>
+
+<Layout title="Beachvolley Zurich">
+	<main class="space-y-16 sm:space-y-28 lg:space-y-32 pb-40 overflow-clip">
+		<section class="relative overflow-hidden scroll-mt-24" id="register">  
+            <Container>
+                <div
+                aria-hidden
+                class="opacity-0 dark:opacity-25 absolute [background-image:radial-gradient(theme(colors.gray.500),transparent_50%)] top-0 w-[1000px] z-10 h-[800px] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+              />
+              <div class="relative pt-32 sm:pt-44 ml-auto">
+                <div class="lg:w-2/3 text-left mx-auto">
+                    
+
+                    <h1 class="text-xl py-2">Beachvolley Zürich Registrierung</h1>
+                    <p class="py-4">
+                        Schön, dass Du dabei bist. Wir brauchen von Dir nur die nötigsten Angaben, um Dich über die Aktivitäten
+                        des Clubs auf dem Laufenden zu halten und Deine Registrierung zu verifizieren, d.h. sicherzustellen, dass es sich 
+                        nicht um Spam handelt. 
+                    </p>
+                <form method="POST" class="w-full max-w-lg">
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-2/3 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-name">
+                          Name
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text">  
+                      </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                          Password
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************">
+                        <p class="text-gray-600 text-xs italic mb-4">Bitte wähle ein sicheres Passwort. Nicht den Namen Deiner Katze.</p>
+                      </div>
+                      <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
+                          E-mail
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-email" type="text" placeholder="player@mail.com">
+                        <p class="text-gray-600 text-xs italic">Damit Du Deine Registrierung abschliessen kannst und wir Dich kontaktieren können.</p>
+                      </div>
+                      <div class="w-full md:w-2/3 px-3 py-3">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Beitreten</button>
+                      </div>                      
+                    </div>
+                  </form>
+                </div>                
+              </div>
+            </Container>
+            </section>
+	</main>
+</Layout>
