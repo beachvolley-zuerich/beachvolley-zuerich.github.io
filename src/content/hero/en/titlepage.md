@@ -1,7 +1,8 @@
 ---
 zurich: für Zürich
 buttontext: Join Beachvolley Zürich
-teaser: Was benötigen wir dafür? Möglichst viele Mitglieder. Unterstütze uns und werde Mitglied – es ist kostenlos! 
+teasertitle: Support us! 
+teaser: Was benötigen wir dafür? Möglichst viele Mitglieder. Unterstütze uns und werde Mitglied – es ist kostenlos.
 ---
 
 

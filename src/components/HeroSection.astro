@@ -1,11 +1,14 @@
 ---
-import { cn } from "@lib/utils"
 import Container from "./Container.astro"
-import {button} from "@tailus/themer-button"
 import { getEntry } from 'astro:content';
-const heroEntry = await getEntry('hero','de/titlepage');
+const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
+const heroEntry = await getEntry('hero',`${complocale}/titlepage`);
+const labelEntry = await getEntry('labels', `${complocale}/forms`)
+
 
 ---
+
+<!-- blue color span class="text-[#2077C2]"></span> -->
 
 
 
@@ -17,16 +20,27 @@ const heroEntry = await getEntry('hero','de/titlepage');
     <Container>
         <div class="relative pt-32 sm:pt-44 ml-auto">
             <div class="lg:w-2/3 text-center mx-auto">
-                <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-5xl md:text-6xl">Beach<span class="text-[#2077C2]">volleyball</span> für Zürich</h1>
+                <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-5xl md:text-6xl">Beachvolleyball für Zürich </h1>
                 <p class="max-w-xl mx-auto mt-8 text-gray-700 dark:text-gray-300">
                 {heroEntry.body}
                  </p>
-                 <p class="mt-6">
-                  {heroEntry.data.teaser}
-                 </p>
-                  <div class=" mt-12 flex flex-wrap justify-center" >
+                 
+                  <div class=" mt-6 flex flex-wrap justify-center" >
+                    <Container>
+                      <div class="relative">
+                        <div class="mt-6 m-auto space-y-6 md:w-8/12 lg:w-7/12">
+                          <h2 class="text-center text-3xl font-bold text-gray-800 dark:text-white md:text-3xl">{heroEntry.data.teasertitle}</h2>
+                          <p class="text-center text-lg text-gray-600 dark:text-gray-300">
+                            {heroEntry.data.teaser}
+                          </p>
+                          <div class="mt-8 flex flex-wrap justify-center gap-y-4 gap-x-6">
+                                        <a href="register" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.join}</a>                     
+                                  </div>
+                        </div>
+                      </div>
+                    </Container>
                     <!-- button start -->
-                    <a href="register" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Beitreten</a> 
+                    
                     <!-- button end -->
                   </div>
             </div>

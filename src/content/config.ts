@@ -12,12 +12,25 @@ const heroCollection = defineCollection({
   schema: z.object({
     zurich: z.string(),
     buttontext: z.string(),
-    teaser: z.string()
+    teasertitle: z.string(),
+    teaser: z.string(),
+    
   })
 });
+
+const labelCollection = defineCollection({
+  type: 'data',
+  schema: z.object({
+    join: z.string(),
+    logintitle: z.string()
+  })
+})
+
 
 
 export const collections = {
   'faqs': faqCollection,
-  'hero': heroCollection
+  'hero': heroCollection,
+  'labels': labelCollection
 };
+
