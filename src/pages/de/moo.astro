@@ -1,0 +1,9 @@
+---
+const data = JSON.stringify(Astro.locals, null, 2);
+
+return Astro.redirect("/de/target")
+---
+
+<pre>${data}</pre>
+
+this is the redirect initiator page

@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+const { message } = Astro.props;
+---
+
+<html>
+<head>
+    <title>Error</title>
+</head>
+<body>
+    <h1>Something went wrong</h1>
+    <p>{message}</p>
+    <a href="/">Go back to home</a>
+</body>
+</html>

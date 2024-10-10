@@ -22,7 +22,8 @@ const labelCollection = defineCollection({
   type: 'data',
   schema: z.object({
     join: z.string(),
-    logintitle: z.string()
+    logintitle: z.string(),
+    nav_account: z.string()
   })
 })
 

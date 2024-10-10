@@ -1,5 +1,9 @@
 ---
 import { languages } from '../i18n/ui';
+import { getEntry } from 'astro:content';
+const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
+const labelEntry = await getEntry('labels', `${complocale}/forms`)
+
 ---
 
 <style>
@@ -7,13 +11,14 @@ import { languages } from '../i18n/ui';
         font-size: .8em;
     }
 
-    .lang-link:hover{
+    .lang-link:hover {
         text-decoration: underline;
     }
+
 </style>
 
 <div class="ml-6 content-end">
-        <a href="login" class="px-2 lang-link">Mein Account</a>
+        <a href=`${complocale}/myaccount` class="px-2 lang-link">{labelEntry.data.nav_account}</a>
         {languages.map(language => (
             <a class="px-2 lang-link" href={`/${language.code}/`}>{language.name}</a>
         ))}
