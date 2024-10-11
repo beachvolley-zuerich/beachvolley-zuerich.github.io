@@ -1,10 +1,14 @@
 ---
 import Container from "./Container.astro";
+import { getEntry } from 'astro:content';
 import { Accordion, AccordionItem } from 'free-astro-components'
 import { getCollection } from 'astro:content';
 
+
+
 const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
 const faqEntries = await getCollection('faqs',  ({ id }) => id.includes(`${complocale}/`));
+const labelEntry = await getEntry('labels', `${complocale}/forms`)
 
 
 ---
@@ -20,8 +24,8 @@ const faqEntries = await getCollection('faqs',  ({ id }) => id.includes(`${compl
     
     <Container>
         <div class="mb-12 lg:w-2/3 text-center mx-auto">
-            <h3 class="text-[#2077C2] text-sm sm:text-base  mb-6 sm:mt-32 mt-16  font-bold">DU HAST FRAGEN ZU BEACHVOLLEY ZÜRICH?</h3>
-            <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-3xl md:text-4xl">Frequently Asked Questions</h1>
+            <h3 class="text-[#2077C2] text-sm sm:text-base  mb-6 sm:mt-32 mt-16  font-bold">{labelEntry.data.faq_subtitle}</h3>
+            <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-3xl md:text-4xl">{labelEntry.data.faq_title}</h1>
         </div>
         <div class="p-[--card-padding] overflow-hidden xlg:aspect-video flex rounded-[--card-border-radius] bg-gray-100 dark:bg-[--card-dark-bg]">
             <div class="mt-12 gap-4 sm:gap-12 max-w-3xl w-full mx-auto">

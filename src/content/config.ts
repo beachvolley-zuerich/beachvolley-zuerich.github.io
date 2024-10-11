@@ -10,7 +10,7 @@ const faqCollection = defineCollection({
 const heroCollection = defineCollection({
   type: 'content',
   schema: z.object({
-    zurich: z.string(),
+    title: z.string(),
     buttontext: z.string(),
     teasertitle: z.string(),
     teaser: z.string(),
@@ -23,7 +23,9 @@ const labelCollection = defineCollection({
   schema: z.object({
     join: z.string(),
     logintitle: z.string(),
-    nav_account: z.string()
+    nav_account: z.string(),
+    faq_title: z.string(),
+    faq_subtitle: z.string() 
   })
 })
 

@@ -1,5 +1,8 @@
 {
     "join": "Join",
     "logintitle": "My Account Login",
-    "nav_account": "My Account"
+    "nav_account": "My Account",
+    "bvz": "Beachvolley Zurich",
+    "faq_title": "Frequently Asked Questions",
+    "faq_subtitle": "Do you have any questions?"
 }
