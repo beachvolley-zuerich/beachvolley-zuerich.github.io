@@ -1,5 +1,5 @@
 ---
-question: Do you compete in a league and/or offer trainings?
+question: Does Beachvolley Zurich Compete in a League or Tournaments? Do You Offer Trainings?
 ---
 
 Nein, aktuell nicht. 

@@ -1,5 +1,8 @@
 ---
-question: Wieso ein Verein?
+question: Why Do You Organize As a Club?
 ---
 
-Ein Grossteil der Menschen, die Beachvolleyball spielen, spielen dies privat und nicht über einen Verein organisiert. Dadurch sind wir anonym und es gibt wenig Zahlen, wie viele es von uns definitiv gibt.
+Ein Grossteil der Menschen, die Beachvolleyball spielen sind nicht über einen Verein organisiert.
+Dadurch sind wir anonymer und es gibt weniger Zahlen zu Aktiven in Zürich. 
+Um die Sichtbarkeit zur erhöhen, die Bedürfnisse der Community mit der Stadt zu diskutieren und gemeinsam 
+den Sport zu fördern gibt es diesen Verein. 

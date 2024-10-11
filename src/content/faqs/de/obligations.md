@@ -2,4 +2,4 @@
 question: Welche Pflichten habe ich als Mitglied?
 ---
 
-Keine! Jeder soll sich so viel einbringen wie er möchte, aber niemand zu etwas gezwungen werden. 
+Keine! Jede(r) soll sich so viel einbringen wie er/sie möchte, aber niemand soll zu Einsatz gezwungen werden. 

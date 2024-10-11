@@ -1,9 +1,8 @@
 ---
-zurich: für Zürich
-buttontext: Join Beachvolley Zürich
-teasertitle: Support us! 
-teaser: Was benötigen wir dafür? Möglichst viele Mitglieder. Unterstütze uns und werde Mitglied – es ist kostenlos.
+zurich: for Zurich
+buttontext: Join
+teasertitle: Support us 
+teaser:  Become a memmber now and support us – it's free.
 ---
 
-
-<b>W</b>ir alle lieben Beachvolleyball! Was wir nicht lieben, sind fehlende oder belegte Felder. Um das zu ändern, gibt es jetzt <b>Beachvolley Zürich</b>. Als Club engagieren wir uns für die Verbesserung der bestehenden Infrastruktur und für weitere nutzbare Anlagen. Ausserdem möchten wir für die Stadt eine Anlaufstelle sein und mit ihr zusammen den Sport fördern.
+We all love Beachvolleyball! What we don't like is missing or occupied courts. To change that, there is now Beachvolley Zurich. As a club, we are committed to improving existing infrastructure and to look for opportunities to get further courts. In addition, we aim to be an point of contact for city officials to grow the sport together.

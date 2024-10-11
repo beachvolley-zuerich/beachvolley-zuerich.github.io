@@ -1,6 +1,7 @@
 ---
-question: Wie lange bin ich Mitglied?
+question: For How Long Am I a Member?
 ---
 
-Falls ihr eure Mitgliedschaft beenden möchtet, könnt ihr dies bis zum übernächsten Monatsende tun.
-Vorerst müsst ihr dafür schriftlich per Mail kündigen, später dann direkt auf der Homepage.
+Falls ihr eure Mitgliedschaft beenden möchtet, könnt ihr dies ganz einfach online tun.
+Logge Dich dazu ein und drücke auf den Button "Mitgliedschaft beenden".
+
