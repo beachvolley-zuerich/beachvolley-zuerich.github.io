@@ -14,7 +14,7 @@ const { user } = Astro.locals;
 const cl = Astro.currentLocale;
 
 if (user) {
-   return Astro.redirect(`/de/myaccount`);
+   return Astro.redirect(`/${cl}/myaccount`);
 }
 
 if (Astro.request.method === "POST") {
@@ -42,7 +42,7 @@ if (Astro.request.method === "POST") {
   });
 
   // Redirect to the account page
-  return Astro.redirect(`/de/myaccount`);
+  return Astro.redirect(`/${cl}/myaccount`);
 }
 ---
 
