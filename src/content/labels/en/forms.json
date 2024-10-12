@@ -4,5 +4,12 @@
     "nav_account": "My Account",
     "bvz": "Beachvolley Zurich",
     "faq_title": "Frequently Asked Questions",
-    "faq_subtitle": "Do you have any questions?"
+    "faq_subtitle": "Do you have any questions?",
+    "login_title": "Login My Account",
+    "password": "Password",
+    "no_account": "Don't have an account? Sign up here.",
+    "register_title": "Beachvolley Zurich Signup",
+    "register_desc": "Great to have you here. We just need essential information from you, to make sure you stay up-to-date about the club's activities um Dich über die Aktivitäten des Clubs auf dem Laufenden zu halten und Deine Registrierung zu verifizieren, d.h. sicherzustellen, dass es sich nicht um Spam handelt. ",
+    "register_email_desc": "Damit Du Deine Registrierung abschliessen kannst und wir Dich kontaktieren können.",
+    "register_password_desc": "Please choose a secure password. Avoid you cat's name."
 }

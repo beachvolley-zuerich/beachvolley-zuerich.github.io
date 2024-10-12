@@ -1,7 +1,7 @@
 ---
 title: Beachvolleyball for Zurich
 buttontext: Join
-teasertitle: Support us 
+teasertitle: Beachvolley Zurich
 teaser:  Become a member now and support us – it's free.
 ---
 

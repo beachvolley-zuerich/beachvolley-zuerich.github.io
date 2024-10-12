@@ -1,8 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
+import { getEntry } from 'astro:content';
 import { SESSION_COOKIE, createSessionClient } from "../../server/appwrite";
+import { formDataToObject } from 'astro:actions';
 const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
+const labelEntry = await getEntry('labels', `${complocale}/forms`)
 
 
 // Redirect the user if not signed in
@@ -14,49 +17,71 @@ if (!user) {
 
 // Handle form action
 if (Astro.request.method === "POST") {
+
+
   // Create session client
   const { account } = createSessionClient(Astro.request);
+  const form_data = await Astro.request.formData();
+  const form_type = form_data.get('form');
+  
+    if (form_type === "signout"){
+        // Delete the Appwrite session
+        await account.deleteSession("current");
 
-  // Delete the Appwrite session
-  await account.deleteSession("current");
+        // Delete the session cookie
+        Astro.cookies.delete(SESSION_COOKIE);
 
-  // Delete the session cookie
-  Astro.cookies.delete(SESSION_COOKIE);
-
-  // Redirect the user to sign up page
-  return Astro.redirect(`/${complocale}/login/`);
+        // Redirect the user to sign up page
+        return Astro.redirect(`/${complocale}/login/`);
+    }
+    
+    
 }
 ---
+
 
 <Layout title="Beachvolley Zurich">
 	<main class="space-y-16 sm:space-y-28 lg:space-y-32 pb-40 overflow-clip">
 		<section class="relative overflow-hidden scroll-mt-24" id="account">  
             <Container>
-                <div
-                aria-hidden
-                class="opacity-0 dark:opacity-25 absolute [background-image:radial-gradient(theme(colors.gray.500),transparent_50%)] top-0 w-[1000px] z-10 h-[800px] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-              />
+                
               <div class="relative pt-32 sm:pt-44 ml-auto">
                 <div class="lg:w-full text-left mx-auto">
-                    <h1 class="text-xl py-2">Beachvolley Zürich </h1>
-                    <ul>
-                        <li>
-                            <strong>Email:</strong> {user.email}
-                        </li>
-                        <li>
-                            <strong>Name:</strong> {user.name}
-                        </li>
-                        <li>
-                            <strong>ID:</strong> {user.$id}
-                        </li>
-                        <li>
-                            <strong>joined:</strong> {user.joined}
-                        </li>
-                    </ul>
+                    <div class="h-full group p-6 sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
+                        <h1 class="text-5xl font-bold text-gray-800 dark:text-white">{labelEntry.data.nav_account}</h1>
+                        <h2 class="text-xl text-gray-700 dark:text-gray-300">{labelEntry.data.bvz}</h2>
+                    </div>
+                    <div class="h-full group p-6 sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
+                        <table class="mt-6 -mb-2 w-full text-gray-600 dark:text-gray-300">
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-right"><button type="submit" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.delete_account}</button></td>
+                                  </tr>
+                              <tr>
+                                <td class="py-2">Name (ID)</td>
+                                <td class="text-gray-500">{user.name} ({user.$id})</td>
+                              </tr>
+                              <tr>
+                                <td class="py-2">Email</td>
+                                <td class="text-gray-500">{user.email}</td>
+                              </tr>
+                              <tr>
+                                <td class="py-2">Mitglied seit</td>
+                                <td class="text-gray-500">16.04.1982</td>
+                              </tr>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+
+                     <div class="text-right h-full group p-6 sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
                         <form method="POST">
-                            <button type="submit">Sign out</button>
-                        </form>       
-                </div>
+                            <input type="hidden" name="form" value="signout">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.signout}</button>
+                        </form>
+                        
+                    </div>     
             </div>
         </section>
     </main>

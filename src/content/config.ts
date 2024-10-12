@@ -24,8 +24,18 @@ const labelCollection = defineCollection({
     join: z.string(),
     logintitle: z.string(),
     nav_account: z.string(),
+    bvz: z.string(),
     faq_title: z.string(),
-    faq_subtitle: z.string() 
+    faq_subtitle: z.string(),
+    login_title: z.string(),
+    password: z.string(),
+    no_account: z.string(),
+    register_title: z.string(),
+    register_desc: z.string(),
+    register_email_desc: z.string(),
+    register_password_desc: z.string(),
+    signout: z.string(),
+    delete_account: z.string()
   })
 })
 

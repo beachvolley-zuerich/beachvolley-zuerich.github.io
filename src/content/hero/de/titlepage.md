@@ -1,7 +1,7 @@
 ---
 title: Beachvolleyball für Zürich
 buttontext: Beitreten
-teasertitle: Support Us
+teasertitle: Beachvolley Zürich
 teaser:  Werde Mitglied und unterstütze uns – es ist kostenlos.
 ---
 

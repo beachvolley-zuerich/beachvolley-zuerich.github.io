@@ -4,6 +4,14 @@
     "nav_account": "Mein Account",
     "bvz": "Beachvolley Zürich",
     "faq_title": "Häufig gestellte Fragen",
-    "faq_subtitle": "DU HAST FRAGEN ZU BEACHVOLLEY ZÜRICH?"
-
+    "faq_subtitle": "DU HAST FRAGEN ZU BEACHVOLLEY ZÜRICH?",
+    "login_title": "Login Mein Account",
+    "password": "Passwort",
+    "no_account": "Du hast noch keinen Mitgliedsaccount? Registriere Dich hier.",
+    "register_title": "Beachvolley Zürich Registrierung",
+    "register_desc": "Schön, dass Du dabei bist. Wir brauchen von Dir nur die nötigsten Angaben, um Dich über die Aktivitäten des Clubs auf dem Laufenden zu halten und Deine Registrierung zu verifizieren, d.h. sicherzustellen, dass es sich nicht um Spam handelt. ",
+    "register_email_desc": "Damit Du Deine Registrierung abschliessen kannst und wir Dich kontaktieren können.",
+    "register_password_desc": "Bitte wähle ein sicheres Passwort. Nicht den Namen Deiner Katze.",
+    "signout": "Sign out",
+    "delete_account": "Mitgliedschaft beenden"
 }
