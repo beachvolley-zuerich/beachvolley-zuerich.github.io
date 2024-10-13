@@ -26,7 +26,7 @@ if (Astro.request.method === "POST") {
   const { users } = createAdminClient();
   const form_data = await Astro.request.formData();
   const form_type = form_data.get('form');
-  const confirmation = form_data.get('user_confirm') === 'true';
+
   
     if (form_type === "signout"){
         // Delete the Appwrite session

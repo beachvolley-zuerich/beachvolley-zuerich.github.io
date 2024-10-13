@@ -29,7 +29,9 @@ if (Astro.request.method === "POST") {
   const { account } = createAdminClient();
 
   try {
-    // Create the email password session
+    // Create a session
+    // basically the difference to the register process is 
+    // that no new user is created
     const session = await account.createEmailPasswordSession(email, password);
 
     // Set the session cookie
