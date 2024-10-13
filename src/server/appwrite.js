@@ -1,23 +1,26 @@
 // src/server/appwrite.js
-
-import { Client, Account } from "node-appwrite";
+import { Client, Account, Users } from "node-appwrite";
 
 
 // The name of your cookie that will store the session
-export const SESSION_COOKIE = "my-custom-session";
+export const SESSION_COOKIE = "my-account-session";
+
 
 // Admin client, used to create new accounts
 export function createAdminClient() {
   const client = new Client()
     .setEndpoint(import.meta.env.PUBLIC_APPWRITE_ENDPOINT)
     .setProject(import.meta.env.PUBLIC_APPWRITE_PROJECT)
-    .setKey(import.meta.env.APPWRITE_KEY); // Set the API key here!
+    .setKey(import.meta.env.APPWRITE_KEY); // Set the API key here! 
 
   // Return the services you need
   return {
     get account() {
       return new Account(client);
     },
+    get users() {
+      return new Users(client);
+    }
   };
 }
 
@@ -53,3 +56,4 @@ function parseCookies(cookies) {
   }
   return map;
 }
+

@@ -2,14 +2,18 @@
 import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 import { getEntry } from 'astro:content';
-import { SESSION_COOKIE, createSessionClient } from "../../server/appwrite";
-import { formDataToObject } from 'astro:actions';
+import { SESSION_COOKIE, createSessionClient, createAdminClient } from "../../server/appwrite";
+
 const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
 const labelEntry = await getEntry('labels', `${complocale}/forms`)
 
-
 // Redirect the user if not signed in
 const { user } = Astro.locals;
+
+const { message = 'Welcome, world!' } = Astro.props;
+
+
+
 
 if (!user) {
    return Astro.redirect(`/${complocale}/login/`);
@@ -17,12 +21,12 @@ if (!user) {
 
 // Handle form action
 if (Astro.request.method === "POST") {
-
-
   // Create session client
   const { account } = createSessionClient(Astro.request);
+  const { users } = createAdminClient();
   const form_data = await Astro.request.formData();
   const form_type = form_data.get('form');
+  const confirmation = form_data.get('user_confirm') === 'true';
   
     if (form_type === "signout"){
         // Delete the Appwrite session
@@ -34,9 +38,22 @@ if (Astro.request.method === "POST") {
         // Redirect the user to sign up page
         return Astro.redirect(`/${complocale}/login/`);
     }
-    
-    
+
+    if (form_type === "delete"){
+        // remember identities is for oauth providers
+        // you can remove certain providers from you account
+        // with deleteIdentity. 
+        // also remind that there is password recovery already 
+        // implemented with
+        users.delete(user.$id);
+        await account.deleteSession("current");
+
+        // Delete the session cookie
+        Astro.cookies.delete(SESSION_COOKIE);
+        return Astro.redirect(`/${complocale}/`);
+    }
 }
+
 ---
 
 
@@ -56,7 +73,12 @@ if (Astro.request.method === "POST") {
                             <tbody>
                                 <tr>
                                     <td></td>
-                                    <td class="text-right"><button type="submit" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.delete_account}</button></td>
+                                    <td class="text-right">
+                                        <form method="POST" id="deleteForm" >
+                                            <input type="hidden" name="form" value="delete">
+                                            <button id="delete_button" type="submit" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.delete_account}</button></td>
+                                        </form>
+                                        
                                   </tr>
                               <tr>
                                 <td class="py-2">Name (ID)</td>
@@ -79,10 +101,22 @@ if (Astro.request.method === "POST") {
                         <form method="POST">
                             <input type="hidden" name="form" value="signout">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.signout}</button>
-                        </form>
-                        
+                        </form>                  
                     </div>     
             </div>
         </section>
     </main>
 </Layout>
+
+
+<script>
+    document.getElementById('deleteForm').addEventListener('submit', function(event) {
+        const result = confirm("Möchtest Du Dich wirklich von Beachvolley Zürich abmelden und Deinen Account löschen?");
+        if (!result) {
+            event.preventDefault(); // Prevent form submission if user clicks "Cancel"
+        } else {
+            alert("Schade. Deine Mitgliedschaft wurde beeendet und Deine Daten wurden gelöscht. Du kannst Dich jederzeit wieder neu registrieren.")
+            console.log("User chose to proceed.");
+        }
+    });
+</script>
