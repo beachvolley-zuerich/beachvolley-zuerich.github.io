@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 
-import { SESSION_COOKIE, createAdminClient } from "../../server/appwrite";
+import { SESSION_COOKIE, createServices, createUser } from "../../server/appwrite";
 import { ID } from "node-appwrite";
 
 
@@ -26,11 +26,14 @@ if (Astro.request.method === "POST") {
   const name = data.get("name");
 
   // Create the admin client
-  const { account } = createAdminClient();
+  const { account, users, databases } = createServices();
 
   // Create the email password session
-  await account.create(ID.unique(), email, password, name);
-  const session = await account.createEmailPasswordSession(email, password);
+  //await account.create(ID.unique(), email, password, name);
+  //const session = await account.createEmailPasswordSession(email, password);
+
+
+  const abc = createUser(account, users, email, password, name);)
 
   // Set the session cookie
   Astro.cookies.set(SESSION_COOKIE, session.secret, {
@@ -42,7 +45,7 @@ if (Astro.request.method === "POST") {
   });
 
   // Redirect to the account page
-  return Astro.redirect(`/${cl}/myaccount`);
+  #return Astro.redirect(`/${cl}/myaccount`);
 }
 ---
 
@@ -57,7 +60,7 @@ if (Astro.request.method === "POST") {
               />
               <div class="relative pt-32 sm:pt-44 ml-auto">
                 <div class="lg:w-2/3 text-left mx-auto">                    
-                    <h1 class="text-xl py-2">Beachvolley Zürich Registrierung</h1>
+                    <h1 class="text-xl py-2">Beachvolley Zürich Registrierung { abc.$id }</h1>
                     <p class="py-4">
                         Schön, dass Du dabei bist. Wir brauchen von Dir nur die nötigsten Angaben, um Dich über die Aktivitäten
                         des Clubs auf dem Laufenden zu halten und Deine Registrierung zu verifizieren, d.h. sicherzustellen, dass es sich 

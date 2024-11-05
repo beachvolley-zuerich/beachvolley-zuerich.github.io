@@ -2,31 +2,70 @@
 import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 import { getEntry } from 'astro:content';
-import { SESSION_COOKIE, createSessionClient, createAdminClient } from "../../server/appwrite";
+import { SESSION_COOKIE, createSessionClient, createServices, deleteUserProfile, readUserProfile } from "../../server/appwrite";
+import { Users } from 'node-appwrite';
 
 const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
 const labelEntry = await getEntry('labels', `${complocale}/forms`)
 
 // Redirect the user if not signed in
 const { user } = Astro.locals;
-
-const { message = 'Welcome, world!' } = Astro.props;
-
-
+const joined = new Date(user.registration);
+const joined_str = joined.toLocaleDateString('de-CH', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+});
 
 
 if (!user) {
    return Astro.redirect(`/${complocale}/login/`);
 }
 
+
+async function getUserProfile() {
+     const { databases } = createServices();
+      try { const user_profile = await databases.getDocument(
+        '67093d67002873e2c459',
+        '67254b050023f2b7dd7d',
+        user.$id);
+         return user_profile; } catch (error) {
+            document.body.innerHTML = `<p>Error fetching user profile: ${error.message}</p>`;
+             return null;
+         }
+  }
+  const user_profile = await getUserProfile();
+  
+
+  
+  
+  
+  
+
+
 // Handle form action
 if (Astro.request.method === "POST") {
   // Create session client
   const { account } = createSessionClient(Astro.request);
-  const { users } = createAdminClient();
+  const { users, databases } = createServices();
   const form_data = await Astro.request.formData();
   const form_type = form_data.get('form');
+  const profile_data = {
+            zip: parseInt(form_data.get('zip'), 10),
+            newsletter: form_data.get('newsletter') === 'on'
+        };
 
+
+    // ok this update stuff is not working yet. 
+    if (form_type === "update"){
+        databases.updateDocument(
+        '67093d67002873e2c459',
+        '67254b050023f2b7dd7d',
+        user.$id,
+        profile_data
+        )
+    }
+  
   
     if (form_type === "signout"){
         // Delete the Appwrite session
@@ -46,6 +85,7 @@ if (Astro.request.method === "POST") {
         // also remind that there is password recovery already 
         // implemented with
         users.delete(user.$id);
+        deleteUserProfile(databases, user.$id);
         await account.deleteSession("current");
 
         // Delete the session cookie
@@ -84,17 +124,47 @@ if (Astro.request.method === "POST") {
                                 <td class="py-2">Name (ID)</td>
                                 <td class="text-gray-500">{user.name} ({user.$id})</td>
                               </tr>
+                              
                               <tr>
-                                <td class="py-2">Email</td>
-                                <td class="text-gray-500">{user.email}</td>
-                              </tr>
-                              <tr>
-                                <td class="py-2">Mitglied seit</td>
-                                <td class="text-gray-500">16.04.1982</td>
+                                <td class="py-2">{labelEntry.data.profile_joined}</td>
+                                <td class="text-gray-500">{joined_str}</td>
                               </tr>
                               
                             </tbody>
                         </table>
+                    </div>
+                    <div class="h-full group p-6 sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
+                        <form method="POST" id="updateForm">
+                        <table class="mt-6 -mb-2 w-full text-gray-600 dark:text-gray-300">
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-right">                 
+                                            <input type="hidden" name="form" value="update">
+                                            <button id="update_button" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.update_account}</button></td>  
+                                  </tr>
+                              <tr>
+                              <tr>
+                                <td class="py-2">Newsletter</td>
+                                <td>
+                                   <input id="newsletter" name="newsletter" type="checkbox" value="on" checked={user_profile.newsletter}>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="py-2">Email</td>
+                                <td class="text-gray-500">
+                                    <input id="email" name="email" class="appearance-none block w-2/3 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" value={user.email}>  
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="py-2">{labelEntry.data.profile_zip}</td>
+                                <td class="text-gray-500">
+                                    <input id="zip" name="zip" class="appearance-none block w-1/3 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"  type="number" min="1000" max="9999" step="1" value={user_profile.zip}>  
+                                    </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </form>
                     </div>
 
                      <div class="text-right h-full group p-6 sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
@@ -119,4 +189,31 @@ if (Astro.request.method === "POST") {
             console.log("User chose to proceed.");
         }
     });
+
+    document.getElementById('updateForm').addEventListener('submit', async function(event){
+        event.preventDefault();
+        const formData = new FormData(this);
+        const zip = parseInt(formData.get('zip'), 10);
+        const newsletter = formData.get('newsletter') === 'on';
+        
+        const response = await fetch(window.location.href, 
+        { 
+            method: 'POST',
+            body: formData 
+        });
+
+
+        if (response.ok) { // Update the form field with the new value
+             document.getElementById('zip').value = zip;
+             document.getElementById('newsletter').checked = newsletter;
+             alert('Danke. Dein Profil wurde aktualisiert.')
+            } else { 
+                alert('Error updating profile'); 
+            }
+        this.submit();
+    })
+
+
+
+
 </script>

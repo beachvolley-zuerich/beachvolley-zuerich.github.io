@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 import { getEntry } from 'astro:content';
 
-import { SESSION_COOKIE, createAdminClient } from "../../server/appwrite";
+import { SESSION_COOKIE, createServices } from "../../server/appwrite";
 
 
 // If there is already a user logged in 
@@ -26,7 +26,7 @@ if (Astro.request.method === "POST") {
   const password = data.get("password");
 
   // Create the admin client
-  const { account } = createAdminClient();
+  const { account } = createServices();
 
   try {
     // Create a session

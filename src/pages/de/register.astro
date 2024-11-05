@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 import { getEntry } from 'astro:content';
 
-import { SESSION_COOKIE, createAdminClient } from "../../server/appwrite";
+import { SESSION_COOKIE, createServices, createUserProfile } from "../../server/appwrite";
 import { ID } from "node-appwrite";
 
 
@@ -27,12 +27,19 @@ if (Astro.request.method === "POST") {
   const email = data.get("email");
   const password = data.get("password");
   const name = data.get("name");
+  const acc_id = ID.unique()
+
+const profile_data = {
+  newsletter: true,
+  zip: 8046
+}
 
   // Create the admin client
-  const { account } = createAdminClient();
+  const { account, databases } = createServices();
 
-  // Create an account a session
-  await account.create(ID.unique(), email, password, name);
+  // Create an account, profile and session
+  const user = await account.create(acc_id, email, password, name);
+  const user_profile = createUserProfile(databases, acc_id, profile_data)
   const session = await account.createEmailPasswordSession(email, password);
 
   // Set the session cookie

@@ -1,5 +1,5 @@
 // src/server/appwrite.js
-import { Client, Account, Users } from "node-appwrite";
+import { Client, Account, Users, Databases } from "node-appwrite";
 
 
 // The name of your cookie that will store the session
@@ -7,7 +7,7 @@ export const SESSION_COOKIE = "my-account-session";
 
 
 // Admin client, used to create new accounts
-export function createAdminClient() {
+export function createServices() {
   const client = new Client()
     .setEndpoint(import.meta.env.PUBLIC_APPWRITE_ENDPOINT)
     .setProject(import.meta.env.PUBLIC_APPWRITE_PROJECT)
@@ -20,7 +20,48 @@ export function createAdminClient() {
     },
     get users() {
       return new Users(client);
+    },
+    get databases() {
+      return new Databases(client);
     }
+  };
+}
+
+
+
+export async function createUserProfile(db, account_id, dta) {
+  try{
+    const result = await db.createDocument(
+      '67093d67002873e2c459',
+      '67254b050023f2b7dd7d',
+      account_id, dta
+    );
+  } catch(error){
+    return Astro.redirect(`/${cl}/error/`);
+  };    
+}
+
+export async function deleteUserProfile(db, account_id){
+  const result = await db.deleteDocument(
+    '67093d67002873e2c459', // databaseId
+    '67254b050023f2b7dd7d', // collectionId
+    account_id // documentId
+);
+}
+
+
+
+
+export async function readUserProfile(db, account_id){
+  try{
+    const result = await db.getDocument(
+      '67093d67002873e2c459',
+      '67254b050023f2b7dd7d',
+      account_id
+    );
+    return result;
+  } catch(error){
+    return Astro.redirect(`/${cl}/error/`);
   };
 }
 
