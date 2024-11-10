@@ -1,0 +1,32 @@
+<!--  uses radio buttons -->
+<section class="flex flex-row flex-wrap m-8">
+
+    <input id="tab-one" type="radio" name="tabs" class="peer/tab-one opacity-0 absolute" checked />
+    <label for="tab-one" class="bg-slate-300 hover:bg-slate-200 peer-checked/tab-one:bg-amber-200 cursor-default p-4 block">
+      One
+    </label>
+  
+    <input id="tab-two" type="radio" name="tabs" class="peer/tab-two opacity-0 absolute" />
+    <label for="tab-two" class="bg-slate-300 hover:bg-slate-200 peer-checked/tab-two:bg-amber-200 cursor-default p-4 block">
+      Two
+    </label>
+  
+    <input id="tab-three" type="radio" name="tabs" class="peer/tab-three opacity-0 absolute" />
+    <label for="tab-three" class="bg-slate-300 hover:bg-slate-200 peer-checked/tab-three:bg-amber-200 cursor-default p-4 block">
+      Three
+    </label>
+  
+    <div class="basis-full h-0"></div>
+  
+    <div class="bg-amber-200 hidden peer-checked/tab-one:block p-4 w-full">
+      First tab pane
+    </div>
+    <div class="bg-amber-200 hidden peer-checked/tab-two:block p-4 w-full">
+      Second tab pane
+    </div>
+    <div class="bg-amber-200 hidden peer-checked/tab-three:block p-4 w-full">
+      Third tab pane
+    </div>
+  
+  </section>
+  

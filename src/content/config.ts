@@ -38,7 +38,11 @@ const labelCollection = defineCollection({
     delete_account: z.string(),
     update_account: z.string(),
     profile_zip: z.string(),
-    profile_joined: z.string()
+    profile_joined: z.string(),
+    tab_membership: z.string(),
+    tab_profile: z.string(),
+    tab_email: z.string(),
+    tab_password: z.string()
   })
 })
 
