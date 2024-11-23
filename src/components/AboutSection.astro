@@ -1,19 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
 import Container from "./Container.astro";
 import { getEntry } from 'astro:content';
 import { Accordion, AccordionItem } from 'free-astro-components'
-import { getCollection } from 'astro:content';
-
+import Markdown from '@astrojs/markdown-remark';
 
 
 const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
 const faqEntries = await getCollection('faqs',  ({ id }) => id.includes(`${complocale}/`));
 const labelEntry = await getEntry('labels', `${complocale}/forms`)
 
-
 ---
 
-<section>
+
     <!-- styling start - underline when hovering - currently only underlined when clicking, not when hovering?-->
     <style>
         a:hover {
@@ -24,7 +23,7 @@ const labelEntry = await getEntry('labels', `${complocale}/forms`)
     
     <Container>
         <div class="mb-12 lg:w-2/3 text-center mx-auto">
-            <h3 class="text-[#2077C2] text-sm sm:text-base  mb-6 sm:mt-32 mt-16  font-bold">{labelEntry.data.faq_subtitle}</h3>
+            <h3 class="text-[#2077C2] text-sm sm:text-base  mb-6   font-bold">{labelEntry.data.faq_subtitle}</h3>
             <h1 class="text-gray-900 dark:text-white font-bold text-4xl sm:text-3xl md:text-4xl">{labelEntry.data.faq_title}</h1>
         </div>
         <div class="p-[--card-padding] overflow-hidden xlg:aspect-video flex rounded-[--card-border-radius] bg-gray-100 dark:bg-[--card-dark-bg]">
@@ -48,4 +47,3 @@ const labelEntry = await getEntry('labels', `${complocale}/forms`)
         </div>
         <!-- 2 grid end -->
     </Container>
-</section>

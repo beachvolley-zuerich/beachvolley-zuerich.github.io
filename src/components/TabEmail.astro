@@ -1,8 +1,11 @@
 ---
-const user = Astro.locals.user;
+import { getEntry } from 'astro:content';
+const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
+const labelEntry = await getEntry('labels', `${complocale}/forms`);
+const { user } = Astro.locals;
 ---
 
-<div class="h-full group p-6 sm:p-8  bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
+<div class="h-full group p-6 sm:p-8  bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-90 shadow-2xl shadow-gray-600/10">
     <table class="mt-6 -mb-2 w-full text-gray-600 dark:text-gray-300">
         <tr>
             <td class="py-2">Email</td>
@@ -11,7 +14,7 @@ const user = Astro.locals.user;
             </td>
         </tr>
         <tr>
-            <td class="py-2">Altes Password</td>
+            <td class="py-2">{labelEntry.data.tab_email_pw}</td>
             <td class="text-gray-500">
                 <input id="password" name="password" class="appearance-none block w-2/3 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="password" type="password" placeholder="******************">
             </td>

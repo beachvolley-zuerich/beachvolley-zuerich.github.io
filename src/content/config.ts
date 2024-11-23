@@ -42,7 +42,11 @@ const labelCollection = defineCollection({
     tab_membership: z.string(),
     tab_profile: z.string(),
     tab_email: z.string(),
-    tab_password: z.string()
+    tab_email_email: z.string(),
+    tab_email_pw: z.string(),
+    tab_password: z.string(),
+    tab_password_old_pw: z.string(),
+    tab_password_new_pw: z.string()
   })
 })
 

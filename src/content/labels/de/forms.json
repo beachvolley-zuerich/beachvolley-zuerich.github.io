@@ -17,8 +17,13 @@
     "tab_profile": "Profil verwalten",
     "tab_password": "Passwort ändern",
     "tab_email": "Emailadresse ändern",
+    "tab_password_old_pw": "Altes Passwort",
+    "tab_password_new_pw": "Neues Passwort",
+    "tab_email_email": "Email",
+    "tab_email_pw": "Passwort",
     "delete_account": "Mitgliedschaft beenden",
     "update_account": "Profil aktualisieren",
     "profile_zip": "Postleitzahl",
     "profile_joined": "Mitglied seit"
+
 }
