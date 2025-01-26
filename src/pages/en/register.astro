@@ -2,8 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 
-import { SESSION_COOKIE, createServices, createUser } from "../../server/appwrite";
-import { ID } from "node-appwrite";
+import { SESSION_COOKIE, createServices } from "../../server/appwrite";
 
 
 // If there is already a user logged in 
@@ -11,29 +10,27 @@ import { ID } from "node-appwrite";
 // where they can sign out if they want, e.g., 
 // to login as another user
 const { user } = Astro.locals;
-const cl = Astro.currentLocale;
+// const cl = Astro.currentLocale;
 
 if (user) {
    return Astro.redirect(`/${cl}/myaccount`);
 }
 
 if (Astro.request.method === "POST") {
-  const lc = Astro.currentLocale;
+  // const lc = Astro.currentLocale;
   // Extract the form data
   const data = await Astro.request.formData();
-  const email = data.get("email");
-  const password = data.get("password");
-  const name = data.get("name");
+  // const email = data.get("email");
+  // const password = data.get("password");
+  // const name = data.get("name");
 
   // Create the admin client
-  const { account, users, databases } = createServices();
+  const { account, users } = createServices();
 
   // Create the email password session
   //await account.create(ID.unique(), email, password, name);
   //const session = await account.createEmailPasswordSession(email, password);
-
-
-  const abc = createUser(account, users, email, password, name);)
+  // const abc = createUser(account, users, email, password, name);
 
   // Set the session cookie
   Astro.cookies.set(SESSION_COOKIE, session.secret, {
@@ -45,7 +42,7 @@ if (Astro.request.method === "POST") {
   });
 
   // Redirect to the account page
-  #return Astro.redirect(`/${cl}/myaccount`);
+  return Astro.redirect(`/${cl}/myaccount`);
 }
 ---
 

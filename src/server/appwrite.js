@@ -32,10 +32,11 @@ export function createServices() {
 export async function createUserProfile(db, account_id, dta) {
   try{
     const result = await db.createDocument(
-      '',
-      '',
+      '67093d67002873e2c459',
+      '67254b050023f2b7dd7d',
       account_id, dta
     );
+    return result;
   } catch(error){
     return Astro.redirect(`/${cl}/error/`);
   };    
@@ -43,10 +44,11 @@ export async function createUserProfile(db, account_id, dta) {
 
 export async function deleteUserProfile(db, account_id){
   const result = await db.deleteDocument(
-    '', // databaseId
-    '', // collectionId
+    '67093d67002873e2c459', // databaseId
+    '67254b050023f2b7dd7d', // collectionId
     account_id // documentId
 );
+return result;
 }
 
 
@@ -55,8 +57,8 @@ export async function deleteUserProfile(db, account_id){
 export async function readUserProfile(db, account_id){
   try{
     const result = await db.getDocument(
-      '',
-      '',
+      '67093d67002873e2c459',
+      '67254b050023f2b7dd7d',
       account_id
     );
     return result;

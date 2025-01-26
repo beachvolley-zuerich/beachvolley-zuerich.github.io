@@ -16,6 +16,6 @@ export default defineConfig({
   // site: 'https://beachvolley-zuerich.github.io',
   output: "server",
   adapter: node({
-    mode: "standalone"
+    mode: "middleware"
   })
 });

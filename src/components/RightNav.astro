@@ -1,14 +1,25 @@
 ---
 import { languages } from '../i18n/ui';
 import { getEntry } from 'astro:content';
-const complocale = Astro.url.pathname.localeCompare('/en/') === 0? 'en' : 'de';
-const labelEntry = await getEntry('labels', `${complocale}/forms`)
+
+type LanguageType = {
+  code: string;
+  name: string;
+};
+
+type UrlType = {
+  url: string;
+  name: string;
+};
+
+const complocale = Astro.url.pathname.localeCompare('/en/') === 0 ? 'en' : 'de';
+const labelEntry = await getEntry('labels', `${complocale}/forms`);
 
 const orig_url = Astro.url.pathname;
 
-const create_urls = (url, languages) => {
+const create_urls = (url: string, languages: LanguageType[]): UrlType[] => {
   const path = url.split('/').slice(2).join('/'); // Extract the path after the language code
-  return languages.map(lang => ({ url: `/${lang.code}/${path}`, name: lang.name }));
+  return languages.map((lang: LanguageType) => ({ url: `/${lang.code}/${path}`, name: lang.name }));
 };
 
 const urls = create_urls(orig_url, languages);
@@ -23,12 +34,11 @@ const urls = create_urls(orig_url, languages);
     .lang-link:hover {
         text-decoration: underline;
     }
-
 </style>
 
 <div class="ml-6 content-end">
-        <a href=`/${complocale}/myaccount` class="px-2 lang-link">{labelEntry.data.nav_account}</a>
-        {urls.map(u => (
-            <a class="px-2 lang-link" href={u.url}>{u.name}</a>
-        ))}
+    <a href={`/${complocale}/myaccount`} class="px-2 lang-link">{labelEntry.data.nav_account}</a>
+    {urls.map((u: UrlType) => (
+        <a class="px-2 lang-link" href={u.url}>{u.name}</a>
+    ))}
 </div>
