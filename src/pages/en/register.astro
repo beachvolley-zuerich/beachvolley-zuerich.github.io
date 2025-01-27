@@ -19,17 +19,22 @@ if (user) {
 if (Astro.request.method === "POST") {
   // const lc = Astro.currentLocale;
   // Extract the form data
-  // const data = await Astro.request.formData();
-  // const email = data.get("email");
-  // const password = data.get("password");
+  const data = await Astro.request.formData();
+  const email = data.get("email");
+  const password = data.get("password");
   // const name = data.get("name");
 
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    // Handle the case where email or password is null
+    return new Response("Email and password must be provided.", { status: 400 });
+  }
+
   // Create the admin client
-  const { account, users } = createServices();
+  const { account  } = createServices();
 
   // Create the email password session
   //await account.create(ID.unique(), email, password, name);
-  //const session = await account.createEmailPasswordSession(email, password);
+  const session = await account.createEmailPasswordSession(email, password);
   // const abc = createUser(account, users, email, password, name);
 
   // Set the session cookie
