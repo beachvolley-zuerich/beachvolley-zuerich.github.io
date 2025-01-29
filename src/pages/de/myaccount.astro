@@ -27,12 +27,22 @@ if (Astro.request.method === "POST") {
   const { account } = createSessionClient(Astro.request);
   const { users, databases } = createServices();
   const form_data = await Astro.request.formData();
-  const form_type = form_data.get('form');
-  const profile_data = {
-            zip: parseInt(form_data.get('zip'), 10),
-            newsletter: form_data.get('newsletter') === 'on'
-        };
+  const form_type = form_data?.get('form');
+  const zip = form_data.get('zip'); 
+  const newsletter = form_data.get('newsletter');
 
+
+  let profile_data;
+  
+  if (typeof zip === 'string' && typeof newsletter  === 'string'){
+    profile_data = {
+            zip: parseInt(zip, 10),
+            newsletter: newsletter === 'on'
+        };
+  } else {
+    throw new Error("Form data is missing required fields.");
+  }
+  
 
     // ok this update stuff is not working yet. 
     if (form_type === "update"){
@@ -141,7 +151,10 @@ if (Astro.request.method === "POST") {
 
 
 <script>
-    document.getElementById('deleteForm').addEventListener('submit', function(event) {
+
+    const deleteForm = document.getElementById('deleteForm');
+    if(deleteForm){
+      deleteForm.addEventListener('submit', function(event) {
         const result = confirm("Möchtest Du Dich wirklich von Beachvolley Zürich abmelden und Deinen Account löschen?");
         if (!result) {
             event.preventDefault(); // Prevent form submission if user clicks "Cancel"
@@ -150,29 +163,34 @@ if (Astro.request.method === "POST") {
             console.log("User chose to proceed.");
         }
     });
-
-    document.getElementById('updateForm').addEventListener('submit', async function(event){
-        event.preventDefault();
-        const formData = new FormData(this);
-        const zip = parseInt(formData.get('zip'), 10);
-        const newsletter = formData.get('newsletter') === 'on';
+    } else {
+      console.error("Form with ID 'deleteForm' not found.");
+    }
+    
+    // const updateForm = document.getElementById('updateForm');
+    // if(updateForm)
+    // document.getElementById('updateForm').addEventListener('submit', async function(event){
+    //     event.preventDefault();
+    //     const formData = new FormData(this);
+    //     const zip = parseInt(formData.get('zip'), 10);
+    //     const newsletter = formData.get('newsletter') === 'on';
         
-        const response = await fetch(window.location.href, 
-        { 
-            method: 'POST',
-            body: formData 
-        });
+    //     const response = await fetch(window.location.href, 
+    //     { 
+    //         method: 'POST',
+    //         body: formData 
+    //     });
 
 
-        if (response.ok) { // Update the form field with the new value
-             document.getElementById('zip').value = zip;
-             document.getElementById('newsletter').checked = newsletter;
-             alert('Danke. Dein Profil wurde aktualisiert.')
-            } else { 
-                alert('Error updating profile'); 
-            }
-        this.submit();
-    })
+    //     if (response.ok) { // Update the form field with the new value
+    //          document.getElementById('zip').value = zip;
+    //          document.getElementById('newsletter').checked = newsletter;
+    //          alert('Danke. Dein Profil wurde aktualisiert.')
+    //         } else { 
+    //             alert('Error updating profile'); 
+    //         }
+    //     this.submit();
+    // })
 
   
 </script>

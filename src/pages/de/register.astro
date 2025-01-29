@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Container from "../../components/Container.astro"
 import { getEntry } from 'astro:content';
 
-import { SESSION_COOKIE, createServices, createUserProfile } from "../../server/appwrite";
-import { ID } from "node-appwrite";
+import { SESSION_COOKIE, createServices } from "../../server/appwrite";
+// import { ID } from "node-appwrite";
 
 
 
@@ -21,26 +21,40 @@ if (user) {
 }
 
 if (Astro.request.method === "POST") {
-  const lc = Astro.currentLocale;
+  // const lc = Astro.currentLocale;
   // Extract the form data
   const data = await Astro.request.formData();
   const email = data.get("email");
   const password = data.get("password");
-  const name = data.get("name");
-  const acc_id = ID.unique()
 
-const profile_data = {
-  newsletter: true,
-  zip: 8046
-}
+
+  let session;
+
+  if (typeof email === 'string' && typeof password === 'string') {
+    const { account } = createServices();
+    session = await account.createEmailPasswordSession(email, password);
+  } else {
+    throw new Error("Email or password is missing or invalid.");
+  }
+
+
+
+
+//  const name = data.get("name");
+//  const acc_id = ID.unique()
+
+// const profile_data = {
+//   newsletter: true,
+//   zip: 8046
+// }
 
   // Create the admin client
-  const { account, databases } = createServices();
+  
 
   // Create an account, profile and session
-  const user = await account.create(acc_id, email, password, name);
-  const user_profile = createUserProfile(databases, acc_id, profile_data)
-  const session = await account.createEmailPasswordSession(email, password);
+  // const user = await account.create(acc_id, email, password, name);
+  // const user_profile = createUserProfile(databases, acc_id, profile_data)
+  
 
   // Set the session cookie
   Astro.cookies.set(SESSION_COOKIE, session.secret, {
@@ -54,6 +68,11 @@ const profile_data = {
   // Redirect to the account page
   return Astro.redirect(`/${cl}/myaccount`);
 }
+
+
+// Optional Chaining (?.): This ensures that if labelEntry or labelEntry.data is undefined, the expression evaluates to undefined without throwing an error.
+// Nullish Coalescing (??): This provides a fallback text 'No account?' if labelEntry?.data?.no_account is undefined or null.
+
 ---
 
 
@@ -67,9 +86,9 @@ const profile_data = {
               />
               <div class="relative pt-32 sm:pt-44 ml-auto">
                 <div class="lg:w-2/3 text-left mx-auto">                    
-                    <h1 class="text-xl py-2">{labelEntry.data.register_title}</h1>
+                    <h1 class="text-xl py-2">{labelEntry?.data?.register_title}</h1>
                     <p class="py-4">
-                        {labelEntry.data.register_desc}
+                        {labelEntry?.data?.register_desc}
                     </p>
                 <form method="POST" class="w-full max-w-lg">
                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -83,20 +102,20 @@ const profile_data = {
                     <div class="flex flex-wrap -mx-3 mb-6">
                       <div class="w-full px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
-                          {labelEntry.data.password}
+                          {labelEntry?.data?.password}
                         </label>
                         <input id="password" name="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="password" type="password" placeholder="******************">
-                        <p class="text-gray-600 text-xs italic mb-4">{labelEntry.data.register_password_desc}</p>
+                        <p class="text-gray-600 text-xs italic mb-4">{labelEntry?.data?.register_password_desc}</p>
                       </div>
                       <div class="w-full px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                           E-mail
                         </label>
                         <input id="email" name="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" placeholder="player@mail.com">
-                        <p class="text-gray-600 text-xs italic">{labelEntry.data.register_email_desc}</p>
+                        <p class="text-gray-600 text-xs italic">{labelEntry?.data?.register_email_desc}</p>
                       </div>
                       <div class="w-full md:w-2/3 px-3 py-3">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry.data.join}</button>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{labelEntry?.data?.join}</button>
                       </div>                      
                     </div>
                   </form>

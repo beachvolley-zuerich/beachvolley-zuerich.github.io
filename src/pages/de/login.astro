@@ -19,20 +19,27 @@ if (user) {
 }
 
 if (Astro.request.method === "POST") {
-  const lc = Astro.currentLocale;
+  // const lc = Astro.currentLocale;
   // Extract the form data
   const data = await Astro.request.formData();
   const email = data.get("email");
   const password = data.get("password");
 
   // Create the admin client
-  const { account } = createServices();
+  // const { account } = createServices();
 
   try {
     // Create a session
     // basically the difference to the register process is 
     // that no new user is created
-    const session = await account.createEmailPasswordSession(email, password);
+    let session;
+
+    if (typeof email === 'string' && typeof password === 'string') {
+      const { account } = createServices();
+      session = await account.createEmailPasswordSession(email, password);
+    } else {
+      throw new Error("Email or password is missing or invalid.");
+    }
 
     // Set the session cookie
     Astro.cookies.set(SESSION_COOKIE, session.secret, {
@@ -70,7 +77,7 @@ if (Astro.request.method === "POST") {
               />
               <div class="relative pt-32 sm:pt-44 ml-auto">
                 <div class="lg:w-full text-left mx-auto">
-                    <h1 class="text-gray-930 dark:text-white font-bold text-4xl sm:text-3xl md:text-3xl mb-3">{labelEntry.data.login_title}</h1>
+                    <h1 class="text-gray-930 dark:text-white font-bold text-4xl sm:text-3xl md:text-3xl mb-3">{labelEntry?.data?.login_title ?? 'Login'}</h1>
                     <form method="POST" class="w-full max-w-lg">              
                         <div class="flex flex-wrap -mx-3 mb-6">
                          <div class="w-full px-3">
@@ -81,12 +88,12 @@ if (Astro.request.method === "POST") {
                          </div>      
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                              {labelEntry.data.password}
+                              {labelEntry?.data?.password ?? 'Password is mandatory'}
                             </label>
                             <input name="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="password" type="password" placeholder="******************">
                           </div>
                           <div class="w-full px-3">
-                            <a class="reg-link" href="/de/register/">{labelEntry.data.no_account}</a>
+                            <a class="reg-link" href="/de/register/">{labelEntry?.data?.no_account ?? 'No account?'}</a>
                           </div>
                           
                           <div class="w-full md:w-2/3 px-3 py-3">
